@@ -1,0 +1,37 @@
+﻿@model List<CopiedditV2.ViewModels.PostViewModel>
+
+<div class="row">
+    <div class="col-12">
+        @foreach (var item in Model)
+        {
+            <div class="row no-gutters">
+                <div class="col-12 col-sm-2 text-center">
+                    <img src="http://placehold.it/65x65" class="rounded-left" height="65" width="65" alt="" />
+                </div>
+                <div class="col-12 col-sm-10">
+                    <div class="row no-gutters">
+                        <div class="col-12">@Html.DisplayFor(modelItem => item.Title)</div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-7">
+                                    @if (item.CommentsCount != 0)
+                                    {
+                                        <small>
+                                            <span>@string.Format("{0} {1}", item.CommentsCount, (item.CommentsCount > 1) ? "Comments" : "Comment")</span> 
+                                        </small>
+                                    }
+                                </div>
+                                <div class="col-5">
+                                    <small class="text-muted">
+                                        <span>@Html.DisplayFor(modelItem => item.DateCreated)</span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        }
+    </div>
+</div>

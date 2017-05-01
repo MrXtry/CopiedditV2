@@ -1,0 +1,9 @@
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\bin\Debug\netcoreapp1.1\CopiedditV2.deps.json
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\bin\Debug\netcoreapp1.1\CopiedditV2.runtimeconfig.json
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\bin\Debug\netcoreapp1.1\CopiedditV2.runtimeconfig.dev.json
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\bin\Debug\netcoreapp1.1\CopiedditV2.dll
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\CopiedditV2.csprojResolveAssemblyReference.cache
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\CopiedditV2.AssemblyInfo.cs
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\bin\Debug\netcoreapp1.1\CopiedditV2.pdb
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\CopiedditV2.dll
+c:\users\kevin\documents\visual studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\CopiedditV2.pdb
