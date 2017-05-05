@@ -14,10 +14,12 @@ namespace CopiedditV2.Controllers
     public class PostController : Controller
     {
         IPostRepository _postRepository;
+        ICommentRepository _commentRepository;
 
-        public PostController(IPostRepository postRepository)
+        public PostController(IPostRepository postRepository, ICommentRepository commentRepository)
         {
             _postRepository = postRepository;
+            _commentRepository = commentRepository;
         }
 
         // GET: Post
@@ -26,9 +28,8 @@ namespace CopiedditV2.Controllers
             if (!await _postRepository.IdCheck(id))
                 return NotFound();
 
-            var test = await _postRepository.Get(id.Value);
-
-            return View(await _postRepository.Get(id.Value));
+            var post = await _postRepository.Get(id.Value);
+            return View(post);
         }
 
         //// GET: Post/Details/5
@@ -48,12 +49,25 @@ namespace CopiedditV2.Controllers
 
         //    return View(postViewModel);
         //}
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateComment(CreateCommentViewModel createCommentViewModel)
+        {
+            if (!await _postRepository.IdCheck(createCommentViewModel.PostId))
+                return NoContent();
 
-        // GET: Post/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+            if (!await _commentRepository.CreateComment(createCommentViewModel))
+                return NoContent();
+
+            return RedirectToAction("Index", new { id = createCommentViewModel.PostId });
+        }
+
+        //GET: Post/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         //// POST: Post/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 

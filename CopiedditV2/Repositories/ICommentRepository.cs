@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace CopiedditV2.Repositories
 {
-    public interface IPostRepository
+    public interface ICommentRepository
     {
-        Task<bool> IdCheck(int? id);
-        Task<PostViewModel> Get(int id);
+        Task<bool> CreateComment(CreateCommentViewModel model);
     }
 }

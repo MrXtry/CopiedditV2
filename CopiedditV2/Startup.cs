@@ -36,6 +36,7 @@ namespace CopiedditV2
             services.AddDbContext<CopiedditV2Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IPostRepository, DbPostRepository>();
+            services.AddTransient<ICommentRepository, DbCommentRepository>();
 
             services.AddMvc();
         }

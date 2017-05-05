@@ -1,0 +1,28 @@
+﻿@model CopiedditV2.ViewModels.CreateCommentViewModel
+
+<form asp-action="CreateComment">
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <div class="col-12">
+                        <input asp-for="Content" class="form-control" placeholder="new comment" required />
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                </div>
+                @Html.HiddenFor(x => x.PostId)
+                <div class="form-group">
+                    <div class="col-12">
+                        <input type="submit" value="New Comment" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

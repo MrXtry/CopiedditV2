@@ -37,7 +37,7 @@ namespace CopiedditV2.Repositories.Db
         {
             try
             {
-                var test = await _context
+                var post = await _context
                     .Posts
                     .Include(i => i.Comments)
                     .Where(x => x.ID == id)
@@ -46,11 +46,25 @@ namespace CopiedditV2.Repositories.Db
                         Id = p.ID,
                         Title = p.Title,
                         DateCreated = p.DateCreated,
-                        CommentsCount = (p.Comments != null && p.Comments.Any()) ? _context.Comments.Where(c => c.PostID == p.ID).Count() : 0
+                        CommentsCount = 0,
+                        Comments = p.Comments
                     })
                     .SingleOrDefaultAsync();
 
-                return test;
+                //var test = await _context
+                //    .Posts
+                //    .Include(i => i.Comments)
+                //    .Where(x => x.ID == id)
+                //    .Select(p => new PostViewModel
+                //    {
+                //        Id = p.ID,
+                //        Title = p.Title,
+                //        DateCreated = p.DateCreated,
+                //        CommentsCount = (p.Comments != null && p.Comments.Any()) ? _context.Comments.Where(c => c.PostID == p.ID).Count() : 0
+                //    })
+                //    .SingleOrDefaultAsync();
+
+                return post;
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CopiedditV2.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace CopiedditV2.ViewModels
         public DateTime DateCreated { get; set; }
 
         public int CommentsCount { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
     }
 }
