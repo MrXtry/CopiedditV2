@@ -72,18 +72,22 @@ namespace CopiedditV2.Controllers
         //// POST: Post/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Title,DateCreated,CommentsCount")] PostViewModel postViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(postViewModel);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(postViewModel);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Title,DateCreated,CommentsCount")] CreatePostViewModel createPostViewModel)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(postViewModel);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction("Index");
+            //}
+
+            if (!await _postRepository.CreatePost(createPostViewModel))
+                return NoContent();
+
+            return Redirect("/");
+        }
 
         //// GET: Post/Edit/5
         //public async Task<IActionResult> Edit(int? id)

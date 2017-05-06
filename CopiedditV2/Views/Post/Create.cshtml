@@ -1,35 +1,20 @@
-@model CopiedditV2.ViewModels.PostViewModel
+@model CopiedditV2.ViewModels.CreatePostViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create New Post</h2>
 
 <form asp-action="Create">
     <div class="form-horizontal">
-        <h4>PostViewModel</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Title" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Title" class="form-control" />
+                <input asp-for="Title" class="form-control" required />
                 <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DateCreated" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="DateCreated" class="form-control" />
-                <span asp-validation-for="DateCreated" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="CommentsCount" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="CommentsCount" class="form-control" />
-                <span asp-validation-for="CommentsCount" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
@@ -41,7 +26,7 @@
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

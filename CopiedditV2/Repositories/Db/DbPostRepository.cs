@@ -71,5 +71,25 @@ namespace CopiedditV2.Repositories.Db
                 return new PostViewModel();
             }
         }
+
+        public async Task<bool> CreatePost(CreatePostViewModel model)
+        {
+            try
+            {
+                _context.Posts.Add(new Post
+                {
+                    Title = model.Title,
+                    Url = "",
+                    DateCreated = DateTime.Now
+                });
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
