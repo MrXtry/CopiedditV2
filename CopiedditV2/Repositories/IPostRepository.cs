@@ -10,6 +10,7 @@ namespace CopiedditV2.Repositories
     {
         Task<bool> IdCheck(int? id);
         Task<PostViewModel> Get(int id);
+        Task<PostsViewModel> GetAll();
         Task<bool> CreatePost(CreatePostViewModel model);
     }
 }

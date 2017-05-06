@@ -1,8 +1,8 @@
-﻿@model List<CopiedditV2.ViewModels.PostViewModel>
+﻿@model CopiedditV2.ViewModels.PostsViewModel
 
 <div class="row">
     <div class="col-12">
-        @foreach (var item in Model)
+        @foreach (var item in Model.Posts)
         {
             <div class="row no-gutters">
                 <div class="col-12 col-sm-2 text-center">

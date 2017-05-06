@@ -47,28 +47,69 @@ namespace CopiedditV2.Repositories.Db
                         Title = p.Title,
                         DateCreated = p.DateCreated,
                         CommentsCount = 0,
-                        Comments = p.Comments
+                        Comments = p.Comments.Select(c => new CommentViewModel
+                        {
+                            Id = c.ID,
+                            PostId = c.PostID,
+                            ParentId = (c.ParentID.HasValue) ? c.ParentID.Value : 0,
+                            Content = c.Content,
+                            DateCreated = c.DateCreated,
+                        })
+                        .ToList()
                     })
                     .SingleOrDefaultAsync();
 
-                //var test = await _context
-                //    .Posts
-                //    .Include(i => i.Comments)
-                //    .Where(x => x.ID == id)
-                //    .Select(p => new PostViewModel
-                //    {
-                //        Id = p.ID,
-                //        Title = p.Title,
-                //        DateCreated = p.DateCreated,
-                //        CommentsCount = (p.Comments != null && p.Comments.Any()) ? _context.Comments.Where(c => c.PostID == p.ID).Count() : 0
-                //    })
-                //    .SingleOrDefaultAsync();
+                post.CommentsCount = post.Comments.Count();
+
+                var test = post.Comments
+                    .Where(p => p.ParentId == 0)
+                    .OrderBy(p => p.Id)
+                    .Select(p => post.Comments
+                        .Where(c => c.ParentId == p.Id)
+                        .OrderBy(c => c.Id))
+                    .ToList();
+
+                //post.Comments
+                //    .Where(p => p.ParentId == 0)
+                //    .OrderBy(p => p.Id)
+                //    .Select(p => post.Comments
+                //        .Where(c => c.ParentId == p.Id)
+                //        .OrderBy(c => c.Id))
+                //    .ToList();
 
                 return post;
             }
             catch (Exception ex)
             {
                 return new PostViewModel();
+            }
+        }
+
+        public async Task<PostsViewModel> GetAll()
+        {
+            try
+            {
+                var viewModel = new PostsViewModel();
+                var posts = await _context.Posts
+                    .Include(i => i.Comments)
+                    .ToListAsync();
+
+                foreach (var post in posts)
+                {
+                    viewModel.Posts.Add(new PostViewModel
+                    {
+                        Id = post.ID,
+                        Title = post.Title,
+                        DateCreated = post.DateCreated,
+                        CommentsCount = (post.Comments != null && post.Comments.Any()) ? _context.Comments.Where(c => c.PostID == post.ID).Count() : 0
+                    });
+                }
+
+                return viewModel;
+            }
+            catch (Exception ex)
+            {
+                return new PostsViewModel();
             }
         }
 

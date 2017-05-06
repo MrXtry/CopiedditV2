@@ -18,6 +18,6 @@ namespace CopiedditV2.ViewModels
 
         public int CommentsCount { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
+        public List<CommentViewModel> Comments { get; set; }
     }
 }
