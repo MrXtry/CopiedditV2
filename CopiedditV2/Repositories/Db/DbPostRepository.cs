@@ -61,21 +61,29 @@ namespace CopiedditV2.Repositories.Db
 
                 post.CommentsCount = post.Comments.Count();
 
-                var test = post.Comments
-                    .Where(p => p.ParentId == 0)
-                    .OrderBy(p => p.Id)
-                    .Select(p => post.Comments
-                        .Where(c => c.ParentId == p.Id)
-                        .OrderBy(c => c.Id))
-                    .ToList();
+                var sections = post.Comments.OrderBy(x => x.ParentId).ToList();
+                var stack = new Stack<CommentViewModel>();
 
-                //post.Comments
-                //    .Where(p => p.ParentId == 0)
-                //    .OrderBy(p => p.Id)
-                //    .Select(p => post.Comments
-                //        .Where(c => c.ParentId == p.Id)
-                //        .OrderBy(c => c.Id))
-                //    .ToList();
+                foreach (var section in sections.Where(x => x.ParentId == default(int)).Reverse())
+                {
+                    stack.Push(section);
+                    sections.RemoveAt(0);
+                }
+
+                var output = new List<CommentViewModel>();
+                while (stack.Any())
+                {
+                    var currentSection = stack.Pop();
+                    var children = sections.Where(x => x.ParentId == currentSection.Id).Reverse();
+
+                    foreach (var section in children)
+                    {
+                        stack.Push(section);
+                        sections.Remove(section);
+                    }
+                    output.Add(currentSection);
+                }
+                post.Comments = output;
 
                 return post;
             }
@@ -100,6 +108,7 @@ namespace CopiedditV2.Repositories.Db
                     {
                         Id = post.ID,
                         Title = post.Title,
+                        VoteCount = post.VoteCount,
                         DateCreated = post.DateCreated,
                         CommentsCount = (post.Comments != null && post.Comments.Any()) ? _context.Comments.Where(c => c.PostID == post.ID).Count() : 0
                     });

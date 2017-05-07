@@ -14,6 +14,8 @@ namespace CopiedditV2.Models
         
         public string Url { get; set; }
 
+        public int VoteCount { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public ICollection<Comment> Comments { get; set; }

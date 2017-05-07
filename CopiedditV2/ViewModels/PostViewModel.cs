@@ -13,6 +13,8 @@ namespace CopiedditV2.ViewModels
 
         public string Title { get; set; }
 
+        public int VoteCount { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
 
