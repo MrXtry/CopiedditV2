@@ -24,26 +24,11 @@ namespace CopiedditV2.Controllers
 
         public async Task<ActionResult> Index()
         {
-            //var viewModel = new PostsViewModel();
-            //var posts = await _context.Posts
-            //    .Include(i => i.Comments)
-            //    .ToListAsync();
+            var posts = await _postRepository.GetAll();
+            if (Request.QueryString.HasValue && Request.QueryString.Value == "?Vote")
+                posts.Posts = posts.Posts.OrderByDescending(x => x.VoteCount).ToList();
 
-            //foreach (var post in posts)
-            //{
-            //    viewModel.Posts.Add(new PostViewModel
-            //    {
-            //        Id = post.ID,
-            //        Title = post.Title,
-            //        DateCreated = post.DateCreated,
-            //        CommentsCount = (post.Comments != null && post.Comments.Any()) ? _context.Comments.Where(c => c.PostID == post.ID).Count() : 0
-            //    });
-            //}
-
-
-            //return View(viewModel.Posts.ToList());
-
-            return View(await _postRepository.GetAll());
+            return View(posts);
         }
 
         [HttpPost]
