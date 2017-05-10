@@ -141,5 +141,41 @@ namespace CopiedditV2.Repositories.Db
                 return false;
             }
         }
+
+        public async Task<bool> UpdatePostVotePlus(UpdateVoteViewModel model)
+        {
+            try
+            {
+                var post = await _context.Posts.FirstOrDefaultAsync(x => x.ID == model.PostId);
+                post.VoteCount++;
+
+                _context.Posts.Update(post);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdatePostVoteMinus(UpdateVoteViewModel model)
+        {
+            try
+            {
+                var post = await _context.Posts.FirstOrDefaultAsync(x => x.ID == model.PostId);
+                post.VoteCount--;
+
+                _context.Posts.Update(post);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

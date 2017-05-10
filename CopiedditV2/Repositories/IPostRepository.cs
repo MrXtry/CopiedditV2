@@ -12,5 +12,7 @@ namespace CopiedditV2.Repositories
         Task<PostViewModel> Get(int id);
         Task<PostsViewModel> GetAll();
         Task<bool> CreatePost(CreatePostViewModel model);
+        Task<bool> UpdatePostVotePlus(UpdateVoteViewModel model);
+        Task<bool> UpdatePostVoteMinus(UpdateVoteViewModel model);
     }
 }

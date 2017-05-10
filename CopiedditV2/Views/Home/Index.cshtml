@@ -12,7 +12,11 @@
                 </div>
                 <div class="col-12 col-sm-10">
                     <div class="row no-gutters">
-                        <div class="col-12">@Html.DisplayFor(modelItem => item.Title) - @Html.DisplayFor(modelItem => item.VoteCount) - <i class="icon-arrow-up">&#x25b4;</i> - <i class="icon-arrow-down">&#x25BE;</i></div>
+                        <div class="col-12">@Html.DisplayFor(modelItem => item.Title) - @Html.DisplayFor(modelItem => item.VoteCount) - 
+                            @Html.Partial("_UpdateVotePlus", new CopiedditV2.ViewModels.UpdateVoteViewModel { PostId = item.Id })       
+                            @Html.Partial("_UpdateVoteMinus", new CopiedditV2.ViewModels.UpdateVoteViewModel { PostId = item.Id })
+    @*<i class="icon-arrow-up">&#x25b4;</i> - <i class="icon-arrow-down">&#x25BE;</i>*@
+                        </div>
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-7">

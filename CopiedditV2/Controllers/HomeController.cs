@@ -45,5 +45,27 @@ namespace CopiedditV2.Controllers
 
             return View(await _postRepository.GetAll());
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateVotePlus(UpdateVoteViewModel updateVoteViewModel)
+        {
+            if (!await _postRepository.IdCheck(updateVoteViewModel.PostId))
+                return NoContent();
+            if (!await _postRepository.UpdatePostVotePlus(updateVoteViewModel))
+                return NoContent();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateVoteMinus(UpdateVoteViewModel updateVoteViewModel)
+        {
+            if (!await _postRepository.IdCheck(updateVoteViewModel.PostId))
+                return NoContent();
+            if (!await _postRepository.UpdatePostVoteMinus(updateVoteViewModel))
+                return NoContent();
+
+            return RedirectToAction("Index");
+        }
     }
 }
