@@ -12,6 +12,8 @@ using CopiedditV2.Data;
 using Microsoft.EntityFrameworkCore;
 using CopiedditV2.Repositories;
 using CopiedditV2.Repositories.Db;
+using CopiedditV2.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CopiedditV2
 {
@@ -22,8 +24,12 @@ namespace CopiedditV2
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            if (env.IsDevelopment())
+                builder.AddUserSecrets<Startup>();
+
+            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
@@ -33,12 +39,46 @@ namespace CopiedditV2
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add framework services.
             services.AddDbContext<CopiedditV2Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IPostRepository, DbPostRepository>();
-            services.AddTransient<ICommentRepository, DbCommentRepository>();
+
+            //services.AddIdentity<Author, IdentityRole>()
+            //    .AddEntityFrameworkStores<CopiedditV2Context>()
+            //    .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<CopiedditV2Context>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                options.Cookies.ApplicationCookie.CookieName = "YouAppCookieName";
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.Cookies.ApplicationCookie.LoginPath = "/Account/LogIn";
+                options.Cookies.ApplicationCookie.LogoutPath = "/Account/LogOut";
+                options.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
+                options.Cookies.ApplicationCookie.AutomaticChallenge = true;
+                options.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
+                options.Cookies.ApplicationCookie.ReturnUrlParameter = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.ReturnUrlParameter;
+
+                options.User.RequireUniqueEmail = true;
+            });
 
             services.AddMvc();
+
+            // Add application services.
+            services.AddTransient<IApplicationUserRepository, DbApplicationUserRepository>();
+            services.AddTransient<IPostRepository, DbPostRepository>();
+            services.AddTransient<ICommentRepository, DbCommentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +86,7 @@ namespace CopiedditV2
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            
 
             if (env.IsDevelopment())
             {
@@ -56,6 +97,8 @@ namespace CopiedditV2
                 app.UseExceptionHandler("Home/Error");
 
             app.UseStaticFiles();
+
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {

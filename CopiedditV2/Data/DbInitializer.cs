@@ -17,11 +17,11 @@ namespace CopiedditV2.Data
 
             //var authors = new Author[]
             //{
-            //    new Author { FirstName = "Carson", LastName = "Alexander", Email = "AlexanderCarson@hotmail.com", Password = "123", DateCreated = DateTime.Now },
-            //    new Author { FirstName = "Meredith", LastName = "Alonso", Email = "AlonsoMeredith@hotmail.com", Password = "123", DateCreated = DateTime.Now },
-            //    new Author { FirstName = "Arturo", LastName = "Anand", Email = "AnandArturo@hotmail.com", Password = "123", DateCreated = DateTime.Now },
-            //    new Author { FirstName = "Gytis", LastName = "Barzdukas", Email = "BarzdukasGytis@hotmail.com", Password = "123", DateCreated = DateTime.Now },
-            //    new Author { FirstName = "Yan", LastName = "Li", Email = "LiYan@hotmail.com", Password = "123", DateCreated = DateTime.Now }
+            //    new Author { FirstName = "Carson", LastName = "Alexander", Email = "AlexanderCarson@hotmail.com", Password = "Test123!", DateCreated = DateTime.Now },
+            //    new Author { FirstName = "Meredith", LastName = "Alonso", Email = "AlonsoMeredith@hotmail.com", Password = "Test123!", DateCreated = DateTime.Now },
+            //    new Author { FirstName = "Arturo", LastName = "Anand", Email = "AnandArturo@hotmail.com", Password = "Test123!", DateCreated = DateTime.Now },
+            //    new Author { FirstName = "Gytis", LastName = "Barzdukas", Email = "BarzdukasGytis@hotmail.com", Password = "Test123!", DateCreated = DateTime.Now },
+            //    new Author { FirstName = "Yan", LastName = "Li", Email = "LiYan@hotmail.com", Password = "Test123!", DateCreated = DateTime.Now }
             //};
             //foreach (Author a in authors)
             //{
@@ -46,7 +46,7 @@ namespace CopiedditV2.Data
 
             var comments = new Comment[]
             {
-                new Comment { PostID = posts.Single(p => p.Title == "Test 1").ID, ParentID = null, Content = "", DateCreated = DateTime.Now }
+                new Comment { PostId = posts.Single(p => p.Title == "Test 1").Id, ParentId = null, Content = "Test", DateCreated = DateTime.Now }
             };
             foreach (Comment c in comments)
             {

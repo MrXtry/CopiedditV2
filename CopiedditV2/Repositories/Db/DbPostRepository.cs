@@ -25,7 +25,7 @@ namespace CopiedditV2.Repositories.Db
                 if (id == null || !id.HasValue)
                     return false;
                 else
-                    return await _context.Posts.AnyAsync(p => p.ID == id);
+                    return await _context.Posts.AnyAsync(p => p.Id == id);
             }
             catch (Exception)
             {
@@ -40,18 +40,18 @@ namespace CopiedditV2.Repositories.Db
                 var post = await _context
                     .Posts
                     .Include(i => i.Comments)
-                    .Where(x => x.ID == id)
+                    .Where(x => x.Id == id)
                     .Select(p => new PostViewModel
                     {
-                        Id = p.ID,
+                        Id = p.Id,
                         Title = p.Title,
                         DateCreated = p.DateCreated,
                         CommentsCount = 0,
                         Comments = p.Comments.Select(c => new CommentViewModel
                         {
-                            Id = c.ID,
-                            PostId = c.PostID,
-                            ParentId = (c.ParentID.HasValue) ? c.ParentID.Value : 0,
+                            Id = c.Id,
+                            PostId = c.PostId,
+                            ParentId = (c.ParentId.HasValue) ? c.ParentId.Value : 0,
                             Content = c.Content,
                             DateCreated = c.DateCreated,
                         })
@@ -106,11 +106,11 @@ namespace CopiedditV2.Repositories.Db
                 {
                     viewModel.Posts.Add(new PostViewModel
                     {
-                        Id = post.ID,
+                        Id = post.Id,
                         Title = post.Title,
                         VoteCount = post.VoteCount,
                         DateCreated = post.DateCreated,
-                        CommentsCount = (post.Comments != null && post.Comments.Any()) ? _context.Comments.Where(c => c.PostID == post.ID).Count() : 0
+                        CommentsCount = (post.Comments != null && post.Comments.Any()) ? _context.Comments.Where(c => c.PostId == post.Id).Count() : 0
                     });
                 }
 
@@ -146,7 +146,7 @@ namespace CopiedditV2.Repositories.Db
         {
             try
             {
-                var post = await _context.Posts.FirstOrDefaultAsync(x => x.ID == model.PostId);
+                var post = await _context.Posts.FirstOrDefaultAsync(x => x.Id == model.PostId);
                 post.VoteCount++;
 
                 _context.Posts.Update(post);
@@ -164,7 +164,7 @@ namespace CopiedditV2.Repositories.Db
         {
             try
             {
-                var post = await _context.Posts.FirstOrDefaultAsync(x => x.ID == model.PostId);
+                var post = await _context.Posts.FirstOrDefaultAsync(x => x.Id == model.PostId);
                 post.VoteCount--;
 
                 _context.Posts.Update(post);

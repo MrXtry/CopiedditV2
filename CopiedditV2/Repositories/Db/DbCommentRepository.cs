@@ -23,7 +23,7 @@ namespace CopiedditV2.Repositories.Db
             {
                 _context.Comments.Add(new Comment
                 {
-                    PostID = model.PostId,
+                    PostId = model.PostId,
                     Content = model.Content,
                     DateCreated = DateTime.Now
                 });

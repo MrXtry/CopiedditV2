@@ -12,7 +12,7 @@ C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\b
 C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\bin\Debug\netcoreapp1.1\CopiedditV2.runtimeconfig.dev.json
 C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\bin\Debug\netcoreapp1.1\CopiedditV2.dll
 C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\bin\Debug\netcoreapp1.1\CopiedditV2.pdb
-C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\CopiedditV2.csprojResolveAssemblyReference.cache
 C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\CopiedditV2.AssemblyInfo.cs
 C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\CopiedditV2.dll
 C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\CopiedditV2.pdb
+C:\Users\larsson\Documents\Visual Studio 2017\Projects\CopiedditV2\CopiedditV2\obj\Debug\netcoreapp1.1\UserSecretsAssemblyInfo.cs

@@ -7,8 +7,11 @@ namespace CopiedditV2.Models
 {
     public class Post
     {
-        public int ID { get; set; }
-        
+        public int Id { get; set; }
+
+        //public int AuthorID { get; set; }
+        public string ApplicationUserId { get; set; }
+
         [StringLength(50)]
         public string Title { get; set; }
         
@@ -19,5 +22,8 @@ namespace CopiedditV2.Models
         public DateTime DateCreated { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+        //public Author Author { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
