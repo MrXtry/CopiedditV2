@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CopiedditV2.Data;
 using CopiedditV2.ViewModels;
 using CopiedditV2.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CopiedditV2.Controllers
 {
@@ -64,6 +65,7 @@ namespace CopiedditV2.Controllers
         }
 
         //GET: Post/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -73,6 +75,7 @@ namespace CopiedditV2.Controllers
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,DateCreated,CommentsCount")] CreatePostViewModel createPostViewModel)
         {
