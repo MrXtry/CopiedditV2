@@ -19,6 +19,7 @@ namespace CopiedditV2.Data
         //public DbSet<Author> Authors { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public DbSet<IdentityRole> IdentityRoles { get; set; }
         public DbSet<IdentityRoleClaim<string>> IdentityRoleClaims { get; set; }
@@ -61,7 +62,10 @@ namespace CopiedditV2.Data
                 .WithMany(p => p.Comments)
                 .HasForeignKey(c => c.PostId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
+            modelBuilder.Entity<Image>().HasKey("Id");
+            modelBuilder.Entity<Image>().HasIndex("ApplicationUserId");
+            modelBuilder.Entity<Image>().ToTable("Image");
 
             //modelBuilder.Ignore<IdentityUserLogin<string>>();
             //modelBuilder.Ignore<IdentityUserRole<string>>();
@@ -140,7 +144,13 @@ namespace CopiedditV2.Data
             modelBuilder.Entity<ApplicationUser>().HasKey("Id");
             modelBuilder.Entity<ApplicationUser>().HasIndex("NormalizedEmail").HasName("EmailIndex");
             modelBuilder.Entity<ApplicationUser>().HasIndex("NormalizedUserName").IsUnique().HasName("UserNameIndex");
+            modelBuilder.Entity<ApplicationUser>().HasIndex("ImageId");
             modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers");
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne(a => a.Image)
+                .WithOne(i => i.ApplicationUser)
+                .HasForeignKey<Image>(i => i.ApplicationUserId);
 
         }
     }
