@@ -13,5 +13,7 @@ namespace CopiedditV2.Models.ManageViewModels
         public IList<UserLoginInfo> Logins { get; set; }
 
         public bool BrowserRemembered { get; set; }
+
+        public Image Image { get; set; }
     }
 }

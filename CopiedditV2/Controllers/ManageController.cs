@@ -1,6 +1,7 @@
 ﻿using CopiedditV2.Data;
 using CopiedditV2.Models;
 using CopiedditV2.Models.ManageViewModels;
+using CopiedditV2.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +20,7 @@ namespace CopiedditV2.Controllers
     public class ManageController : Controller
     {
         private readonly CopiedditV2Context _context;
+        IApplicationUserRepository _applicationUserRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly string _externalCookieScheme;
@@ -29,13 +31,15 @@ namespace CopiedditV2.Controllers
             SignInManager<ApplicationUser> signInManger,
             IOptions<IdentityCookieOptions> identityCookieOptions,
             ILoggerFactory loggerFactory,
-            CopiedditV2Context context)
+            CopiedditV2Context context,
+            IApplicationUserRepository applicationUserRepository)
         {
             _userManager = userManager;
             _signInManager = signInManger;
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _logger = loggerFactory.CreateLogger<ManageController>();
             _context = context;
+            _applicationUserRepository = applicationUserRepository;
         }
 
         [HttpGet]
@@ -45,11 +49,14 @@ namespace CopiedditV2.Controllers
             if (user == null)
                 return View("Error");
 
+            var getUser = await _applicationUserRepository.GetUser(user.Email);
+
             var model = new IndexViewModel
             {
                 HasPassword = await _userManager.HasPasswordAsync(user),
                 Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
+                Image = getUser.Image
             };
 
             return View(model);
@@ -116,6 +123,18 @@ namespace CopiedditV2.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public FileStreamResult ViewImage(int id)
+        {
+            using (_context)
+            {
+                Image image = _context.Images.FirstOrDefault(i => i.Id == id);
+                MemoryStream ms = new MemoryStream(image.Data);
+
+                return new FileStreamResult(ms, image.ContentType);
+            }
         }
 
 

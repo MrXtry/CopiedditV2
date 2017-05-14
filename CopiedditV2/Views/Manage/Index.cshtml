@@ -26,12 +26,20 @@
 
             @Model.Logins.Count <a asp-controller="Manage" asp-action="ManageLogins" class="btn-bracketed">Manage</a>
         </dd>
-        <dt>Image</dt>
+        <dt>Upload Image</dt>
         <dd>
             <form action="/Manage/UploadImage" enctype="multipart/form-data" method="post">
                 <input type="file" name="files" />
                 <button>upload image</button>
             </form>
+        </dd>
+
+        <dt>Show Image</dt>
+        <dd>
+            @if (Model.Image.Data != null)
+            {
+                <img src="/Manage/ViewImage/@Model.Image.Id" />
+            }
         </dd>
     </dl>
 </div>

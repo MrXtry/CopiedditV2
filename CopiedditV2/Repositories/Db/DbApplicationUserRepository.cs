@@ -49,7 +49,9 @@ namespace CopiedditV2.Repositories.Db
         {
             try
             {
-                var user = await _context.ApplicationUsers.SingleOrDefaultAsync(a => a.Email == email);
+                var user = await _context.ApplicationUsers
+                    .Include(i => i.Image)
+                    .SingleOrDefaultAsync(a => a.Email == email);
                 return user;
             }
             catch (Exception ex)
