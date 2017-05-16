@@ -14,7 +14,26 @@
                 @Html.Partial("_CreateComment", new CopiedditV2.ViewModels.CreateCommentViewModel{ PostId = Model.Id })
                 @foreach (var item in Model.Comments)
                 {
-                    <p>@Html.DisplayFor(modelItem => item.Id) - @Html.DisplayFor(modelItem => item.ParentId) - @Html.DisplayFor(modelItem => item.Content)</p>
+                    <div class="row">
+                        @if (item.ParentId != 0)
+                        {
+                            <div class="col-11 push-1">
+                                <p>@Html.DisplayFor(modelItem => item.Id) - @Html.DisplayFor(modelItem => item.ParentId) - @Html.DisplayFor(modelItem => item.Content)</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-12">
+                                <p>@Html.DisplayFor(modelItem => item.Id) - @Html.DisplayFor(modelItem => item.ParentId) - @Html.DisplayFor(modelItem => item.Content) <span class="reply">reply</span></p>
+                                <div class="row">
+                                    <div class="col-11 push-1">
+                                        @Html.Partial("_CreateComment", new CreateCommentViewModel { PostId = Model.Id, ParentId = item.Id })
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
                     <br />
                 }
             </div>

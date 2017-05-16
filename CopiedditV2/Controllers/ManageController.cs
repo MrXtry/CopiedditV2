@@ -56,7 +56,7 @@ namespace CopiedditV2.Controllers
                 HasPassword = await _userManager.HasPasswordAsync(user),
                 Logins = await _userManager.GetLoginsAsync(user),
                 BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
-                Image = getUser.Image
+                Image = (getUser.Image != null) ? getUser.Image : new Image()
             };
 
             return View(model);
@@ -116,7 +116,22 @@ namespace CopiedditV2.Controllers
                         ApplicationUserId = user.Id
                     };
 
-                    _context.Images.Add(imageEntity);
+                    if (_context.Images.Any(i => i.ApplicationUserId == user.Id))
+                    {
+                        var dbImage = _context.Images.FirstOrDefault(i => i.ApplicationUserId == user.Id);
+                        //imageEntity.Id = dbImageId;
+                        dbImage.Name = imageEntity.Name;
+                        dbImage.Data = imageEntity.Data;
+                        dbImage.Width = imageEntity.Width;
+                        dbImage.Height = imageEntity.Height;
+
+                        _context.Images.Update(dbImage);
+                    }
+                    else
+                    {
+                        _context.Images.Add(imageEntity);
+                    }
+
 
                     await _context.SaveChangesAsync();
                 }

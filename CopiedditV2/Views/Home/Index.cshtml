@@ -4,21 +4,33 @@
     <div class="col-12">
         <a href="?Vote">Best Vote</a>
     </div>
-    <div class="col-12">
+    <hr />
+    <div class="col-12 push-1">
         @foreach (var item in Model.Posts)
         {
             <div class="row no-gutters">
-                <div class="col-12 col-sm-2 text-center">
+                @*<div class="col-12 col-sm-2 text-center">
                     <a href="@string.Format("post/index/{0}", item.Id)">
                         <img src="http://placehold.it/65x65" class="rounded-left" height="65" width="65" alt="" />
                     </a>
-                </div>
+                </div>*@
                 <div class="col-12 col-sm-10">
                     <div class="row no-gutters">
-                        <div class="col-12">@Html.DisplayFor(modelItem => item.Title) - @Html.DisplayFor(modelItem => item.VoteCount) - 
-                            @Html.Partial("_UpdateVotePlus", new CopiedditV2.ViewModels.UpdateVoteViewModel { PostId = item.Id })       
-                            @Html.Partial("_UpdateVoteMinus", new CopiedditV2.ViewModels.UpdateVoteViewModel { PostId = item.Id })
+                        <div class="col-12"><h4><a href="/Post/Index/@item.Id">@Html.DisplayFor(modelItem => item.Title)</a></h4>
+                            @*@Html.Partial("_UpdateVotePlus", new CopiedditV2.ViewModels.UpdateVoteViewModel { PostId = item.Id })       
+                            @Html.Partial("_UpdateVoteMinus", new CopiedditV2.ViewModels.UpdateVoteViewModel { PostId = item.Id })*@
     @*<i class="icon-arrow-up">&#x25b4;</i> - <i class="icon-arrow-down">&#x25BE;</i>*@
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-1">@Html.DisplayFor(modelItem => item.VoteCount)</div>
+                                    <div class="">
+                                        @Html.Partial("_UpdateVotePlus", new CopiedditV2.ViewModels.UpdateVoteViewModel { PostId = item.Id })
+                                        @Html.Partial("_UpdateVoteMinus", new CopiedditV2.ViewModels.UpdateVoteViewModel { PostId = item.Id })
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12">
                             <div class="row">

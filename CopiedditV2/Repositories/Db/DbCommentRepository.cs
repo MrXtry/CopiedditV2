@@ -24,6 +24,7 @@ namespace CopiedditV2.Repositories.Db
                 _context.Comments.Add(new Comment
                 {
                     PostId = model.PostId,
+                    ParentId = model.ParentId,
                     Content = model.Content,
                     DateCreated = DateTime.Now
                 });

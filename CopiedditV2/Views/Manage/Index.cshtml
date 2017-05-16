@@ -3,9 +3,46 @@
     ViewData["Title"] = "Manage your account";
 }
 
-<h2>@ViewData["Title"].</h2>
-<p class="text-success">@ViewData["StatusMessage"]</p>
+@*<h2>@ViewData["Title"].</h2>
+<p class="text-success">@ViewData["StatusMessage"]</p>*@
 
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12 profile-header-container">
+                        <div class="profile-header-img">
+                            @if (Model.Image.Data != null)
+                            {
+                                <img src="/Manage/ViewImage/@Model.Image.Id" class="rounded-circle" height="200" width="200" />
+                            }
+                            else
+                            {
+                                <img src="http://placehold.it/200x200" class="rounded-circle" />
+                            }
+                            <div class="rank-label-container">
+                                <form action="/Manage/UploadImage" enctype="multipart/form-data" method="post">
+                                    <label class="custom-file">
+                                        <input type="file" name="files" class="col-1 custom-file-input" />
+                                        <span class="label label-default rank-label">new</span>
+                                    </label>
+                                    <button class="btn btn-info">image</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h4>Change Password</h4>
+                        <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
 <div>
     <h4>Change your account settings</h4>
     <hr />
@@ -21,11 +58,11 @@
                 <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
             }
         </dd>
-        <dt>External Logins:</dt>
+        @*<dt>External Logins:</dt>
         <dd>
 
             @Model.Logins.Count <a asp-controller="Manage" asp-action="ManageLogins" class="btn-bracketed">Manage</a>
-        </dd>
+        </dd>*@
         <dt>Upload Image</dt>
         <dd>
             <form action="/Manage/UploadImage" enctype="multipart/form-data" method="post">
